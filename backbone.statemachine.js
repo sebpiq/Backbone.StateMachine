@@ -16,16 +16,15 @@
         return define(['backbone', 'underscore'], function() {
             return factory.apply(window, arguments);
         });
-    }
-
-    // NodeJS. Calling with required packages
-    if (typeof module === 'object' && module.exports) {
+    } else if (typeof module === 'object' && module.exports) {
+        // NodeJS. Calling with required packages
         factory.call(window, require('backbone'), require('underscore'));
+    } else {
+        // Browser globals.
+        factory.call(window, Backbone, window._);
     }
-
-    // Browser globals.
-    factory.call(window, Backbone, window._);
 }(typeof global === "object" ? global : this, function (Backbone, _) {
+    var $ = Backbone.$;
     Backbone.StateMachine = (function(Backbone, _) {
 
       // This is a key that means 'any state'.
